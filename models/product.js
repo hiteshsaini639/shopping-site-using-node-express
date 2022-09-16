@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const p = path.join(
+const pathd = path.join(
   path.dirname(process.mainModule.filename),
-  'data',
-  'products.json'
+  "data",
+  "products.json"
 );
 
-const getProductsFromFile = cb => {
-  fs.readFile(p, (err, fileContent) => {
+const getProductsFromFile = (cb) => {
+  fs.readFile(pathd, (err, fileContent) => {
     if (err) {
       cb([]);
     } else {
@@ -27,9 +27,9 @@ module.exports = class Product {
 
   save() {
     this.id = Math.random().toString();
-    getProductsFromFile(products => {
+    getProductsFromFile((products) => {
       products.push(this);
-      fs.writeFile(p, JSON.stringify(products), err => {
+      fs.writeFile(pathd, JSON.stringify(products), (err) => {
         console.log(err);
       });
     });
@@ -40,8 +40,8 @@ module.exports = class Product {
   }
 
   static findById(id, cb) {
-    getProductsFromFile(products => {
-      const product = products.find(p => p.id === id);
+    getProductsFromFile((products) => {
+      const product = products.find((p) => Number(p.id) === Number(id));
       cb(product);
     });
   }
